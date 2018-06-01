@@ -1,0 +1,78 @@
+Script started on 2018-06-01 14:33:45-04:00
+]0;root@g8:/opt/hub/pratt-parsing-demo[root@g8 pratt-parsing-demo]# java pp/Tests
+1+2+3 -> (+ (+ 1 2) 3)
+1+2*3 -> (+ 1 (* 2 3))
+4*(2+3) -> (* 4 (+ 2 3))
+(2+3)*4 -> (* (+ 2 3) 4)
+1<2 -> (< 1 2)
+x=3 -> (= x 3)
+x = 2*3 -> (= x (* 2 3))
+x = y -> (= x y)
+x*y - y*z -> (- (* x y) (* y z))
+x/y - y%z -> (- (/ x y) (% y z))
+x = y -> (= x y)
+2 ** 3 ** 2 -> (** 2 (** 3 2))
+a = b = 10 -> (= a (= b 10))
+x = ((y*4)-2) -> (= x (- (* y 4) 2))
+x - -y -> (- x (- y))
+-1 * -2 -> (* (- 1) (- 2))
+-x * -y -> (* (- x) (- y))
+x - -234 -> (- x (- 234))
+x += y += 3 -> (+= x (+= y 3))
+x[1,2] -> (get x (, 1 2))
++1 - +2 -> (- (+ 1) (+ 2))
+f[x] += 1 -> (+= (get f x) 1)
+~1 | ~2 -> (| (~ 1) (~ 2))
+x & y | a & b -> (| (& x y) (& a b))
+~x ^ y -> (^ (~ x) y)
+x << y | y << z -> (| (<< x y) (<< y z))
+a ^= b-1 -> (^= a (- b 1))
+a && b || c && d -> (|| (&& a b) (&& c d))
+!a && !b -> (&& (! a) (! b))
+a != b && c == d -> (&& (!= a b) (== c d))
+a > b ? 0 : 1 -> (? (> a b) 0 1)
+a > b ? x+1 : y+1 -> (? (> a b) (+ x 1) (+ y 1))
+1 ? true1 : 2 ? true2 : false -> (? 1 true1 (? 2 true2 false))
+1 ? true1 : (2 ? true2 : false) -> (? 1 true1 (? 2 true2 false))
+1 ? (2 ? true : false1) : false2 -> (? 1 (? 2 true false1) false2)
+1 ? 2 ? true : false1 : false2 -> (? 1 (? 2 true false1) false2)
+x ? 1 : 2, y ? 3 : 4 -> (, (? x 1 2) (? y 3 4))
+a , b ? c, d : e, f -> (, a (? b (, c d) e) f)
+!x -> (! x)
+x-- -> (post-- x)
+x[1]-- -> (post-- (get x 1))
+--x -> (-- x)
+++x[1] -> (++ (get x 1))
+!x-- -> (! (post-- x))
+~x++ -> (~ (post++ x))
+x++ - y++ -> (- (post++ x) (post++ y))
+++x - ++y -> (- (++ x) (++ y))
+x[1] -> (get x 1)
+x[a+b] -> (get x (+ a b))
+x = y(2)*3 + y(4)*5 -> (= x (+ (* (call y 2) 3) (* (call y 4) 5)))
+x(1,2)+y(3,4) -> (+ (call x 1 2) (call y 3 4))
+x(a,b,c[d]) -> (call x a b (get c d))
+x(1,2)*j+y(3,4)*k+z(5,6)*l -> (+ (+ (* (call x 1 2) j) (* (call y 3 4) k)) (* (call z 5 6) l))
+print(test(2,3)) -> (call print (call test 2 3))
+print("x") -> (call print x)
+min(255,n*2) -> (call min 255 (* n 2))
+c = pal[i*8] -> (= c (get pal (* i 8)))
+x=1,y=2,z=3 -> (, (= x 1) (= y 2) (= z 3))
+got expected error for }: Unexpected end of input
+got expected error for ]: <Token ] ]> can't be used in prefix position
+got expected error for {: Unexpected end of input
+got expected error for x+1 = y: Can't assign to (+ x 1) (<Token + +>)
+got expected error for (x+1)++: Can't assign to (+ x 1) (<Token + +>)
+got expected error for foo ? 1 :: Unexpected end of input
+got expected error for foo ? 1 : expected :, got <Token eof eof>
+got expected error for %: <Token % %> can't be used in prefix position
+got expected error for }: Unexpected end of input
+got expected error for {: Unexpected end of input
+got expected error for ]: <Token ] ]> can't be used in prefix position
+got expected error for 1 ( 2: 1 can't be called
+got expected error for (x+1) ( 2 ): (+ x 1) can't be called
+got expected error for 1 [ 2 ]: 1 can't be indexed
+]0;root@g8:/opt/hub/pratt-parsing-demo[root@g8 pratt-parsing-demo]# exit
+exit
+
+Script done on 2018-06-01 14:33:53-04:00
