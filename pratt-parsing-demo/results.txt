@@ -1,5 +1,4 @@
-Script started on 2018-06-01 14:33:45-04:00
-]0;root@g8:/opt/hub/pratt-parsing-demo[root@g8 pratt-parsing-demo]# java pp/Tests
+[]# java pp/Tests
 1+2+3 -> (+ (+ 1 2) 3)
 1+2*3 -> (+ 1 (* 2 3))
 4*(2+3) -> (* 4 (+ 2 3))
@@ -72,7 +71,3 @@ got expected error for ]: <Token ] ]> can't be used in prefix position
 got expected error for 1 ( 2: 1 can't be called
 got expected error for (x+1) ( 2 ): (+ x 1) can't be called
 got expected error for 1 [ 2 ]: 1 can't be indexed
-]0;root@g8:/opt/hub/pratt-parsing-demo[root@g8 pratt-parsing-demo]# exit
-exit
-
-Script done on 2018-06-01 14:33:53-04:00
