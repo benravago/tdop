@@ -1,7 +1,5 @@
 package tdop;
 
-// https://www.oilshell.org/blog/2016/11/03.html
-
 import java.util.Map;
 import java.util.HashMap;
 
