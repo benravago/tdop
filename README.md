@@ -4,5 +4,6 @@ Some time ago, I found Andy Chu's blog post about [a style of writing Pratt pars
 
 To start with, I've converted his Python [demo code](https://github.com/andychu/pratt-parsing-demo), following the original as much as possible to make the correspondence clear.  To run the demo, checkout the repo, <code>cd pratt-parsing-demo</code>, compile the code with <code>javac pp/Tests.java</code>, then <code>java pp.Tests</code> to run the test suite; expect output as in *pratt-parsing-demo/results.txt*.
 
+The *src/* and *test/* directories contain a restructured java port of the demo code.  This port separates the TDOP api and the Parser driver code and also includes a more extensive Tokenizer.  The *test/{Arith,Tests}.java* files correspond to the *pratt-parsing-demo/{ArithParse,Tests}.java* files. 
 
 Eventually, I hope to add an additional language implementation using the techniques shown here.
