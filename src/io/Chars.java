@@ -26,7 +26,7 @@ public interface Chars {
         int srcEnd = src.length();
         char[] dst = new char[srcEnd];
         src.getChars(0,srcEnd,dst,0);
-        return CharBuffer.wrap(dst);
+        return chars(dst);
     }
 
     static CharBuffer chars(Path path) {
