@@ -97,7 +97,7 @@ public class Tokenizer extends Tokens implements Iterator<Token> {
         if (isQuote(ch)) return quoted();
         // text units
         if (isJavaIdentifierStart(ch)) return name();
-        if (isDigit(ch)) return number();
+        if (isDec(ch)) return number();
         if (isSpecial(ch)) return operator();
         /* else */ return unrecognized();
     }
@@ -154,13 +154,13 @@ public class Tokenizer extends Tokens implements Iterator<Token> {
 
     int base2() {
         if (head()) return -1; // 0b_nnn
-        while (isBit(pop())) {}
+        while (pop() == '_' || isBit(ch)) {}
         return tail('l','L') ? -1 : 'b'; // nnn_ or nnn_[l|L]
     }
 
     int base16() {
         if (head()) return -1; // 0x_nnn
-        while (isHex(pop())) {}
+        while (pop() == '_' || isHex(ch)) {}
         return tail('l','L') ? -1 : 'x'; // nnn_ or nnn_[l|L]
     }
 
@@ -205,15 +205,18 @@ public class Tokenizer extends Tokens implements Iterator<Token> {
         if (e == '+' || e =='-') skip(1);
     }
     void digits() {
-        while (pop() == '_' || isDigit(ch)) {}
+        while (pop() == '_' || isDec(ch)) {}
     }
 
     static boolean isBit(int b) {
-        return b == '_' || b == '0' || b == '1';
+        return b == '0' || b == '1';
+    }
+    static boolean isDec(int d) {
+        return d < '0'   ? false // 0
+             : d < '9'+1 ;       // 9+1
     }
     static boolean isHex(int x) {
-        return x == '_'  ? true
-             : x < '0'   ? false // 0
+        return x < '0'   ? false // 0
              : x < '9'+1 ? true  // 9+1
              : x < 'A'   ? false // A
              : x < 'F'+1 ? true  // F+1
@@ -299,7 +302,7 @@ public class Tokenizer extends Tokens implements Iterator<Token> {
     }
 
     static boolean isQuote(int b) {
-        return b == '"' || b == '\'';
+        return b == '"' || b == '\'' | b =='`';
     }
 
     int quoted() {
